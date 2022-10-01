@@ -9,7 +9,7 @@ async function main() {
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: process.env.HOST,
-    port: process.env.PORT, 
+    port: process.env.MAIL_PORT, 
     auth: {
       user: process.env.USER,
       pass: process.env.PASS, 
