@@ -1,5 +1,10 @@
 const express = require("express");
-const { signupUser, loginUser } = require("../controllers/userController");
+const {
+  signupUser,
+  loginUser,
+  profile,
+} = require("../controllers/userController");
+const protect = require("../middleware/authMiddeware");
 
 const router = express.Router();
 
@@ -10,8 +15,6 @@ router.route("/register").post(signupUser);
 router.route("/login").post(loginUser);
 
 // User Profile Route
-// router.get("/userProfile",(req,res)=>{
-//     res.send("userProfile Working!")
-// })
+router.route("/userProfile").post(protect, profile);
 
 module.exports = router;

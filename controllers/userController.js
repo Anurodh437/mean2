@@ -10,9 +10,9 @@ const signupUser = asyncHandler(async (req, res) => {
   console.log("Signup user called ");
 
   // extract the required parameters from request
-  const { name, email, password, username, mobile } = req.body;
+  const { name, email, password, mobile } = req.body;
 
-  if (!name || !email || !password || !username || !mobile) {
+  if (!name || !email || !password || !mobile) {
     res.status(400);
     throw new Error("Please enter all the fields");
   }
@@ -32,7 +32,6 @@ const signupUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
-    username,
     mobile,
   });
 
@@ -44,7 +43,6 @@ const signupUser = asyncHandler(async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        profilePic: user.username,
         mobile: user.mobile,
         token: generateToken(user._id),
       },
@@ -76,7 +74,6 @@ const loginUser = asyncHandler(async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        username: user.username,
         mobile: user.mobile,
         token: generateToken(user._id),
       },
@@ -87,4 +84,9 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { signupUser, loginUser };
+const profile = asyncHandler(async (req, res) => {
+  console.log("profile route called");
+  res.send("Profile check api is working");
+});
+
+module.exports = { signupUser, loginUser, profile };
