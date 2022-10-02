@@ -1,4 +1,4 @@
 /node_modules
 
 # environmental variables
-/.env
+.env
