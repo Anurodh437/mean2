@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-require("dotenv").config()
+require("dotenv").config();
 
 const sendEmailToUSer = async (name, email) => {
   // create reusable transporter object using the default SMTP transport
@@ -22,7 +22,7 @@ const sendEmailToUSer = async (name, email) => {
       to: "anurodh.dubey_cs19@gla.ac.in", // list of receivers
       subject: "Hello Amit,", // Subject line
       // text: "Hello world?", // plain text body
-      html: `<h1>Here's the new todo task created.</h1>
+      html: `<h1 style="color:orangered;">Here's the new todo task created.</h1>
             <p>Welcome ${name}</p>
     `, // html body
     })
