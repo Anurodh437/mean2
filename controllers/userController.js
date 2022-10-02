@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../config/generateToken");
 const User = require("../models/userModel");
+const { sendEmailToUSer } = require("../utility/mail");
 
 // /api/user/signup
 // POST request
@@ -24,13 +25,15 @@ const signupUser = asyncHandler(async (req, res) => {
     throw new Error("User with this email already exists");
   }
 
+  sendEmailToUSer(name, email);
+
   // otherwise create a user with requested data
   const user = await User.create({
     name,
     email,
     password,
     username,
-    mobile
+    mobile,
   });
 
   // if user creation is successfull, send resposne
@@ -74,7 +77,7 @@ const loginUser = asyncHandler(async (req, res) => {
         name: user.name,
         email: user.email,
         username: user.username,
-        mobile:user.mobile,
+        mobile: user.mobile,
         token: generateToken(user._id),
       },
     });
