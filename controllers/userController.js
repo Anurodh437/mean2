@@ -51,7 +51,7 @@ const signupUser = asyncHandler(async (req, res) => {
   // if some error occurred in creating a user
   else {
     res.status(400);
-    throw new Error("Error Ocuured!");
+    throw new Error("Error Occured!");
   }
 });
 
