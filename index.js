@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
-const passport = require("passport");
+const taskRoutes = require("./routes/taskRoutes");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
@@ -23,8 +23,9 @@ app.use(bodyParser.json());
 // user routes
 app.use("/api/users", userRoutes);
 
-// todo routes
-// app.use("/api/task", todoRoutes);
+// task routes
+app.use("/api/tasks",taskRoutes);
+
 
 // index routing
 app.get("/", (req, res) => {
