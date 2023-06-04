@@ -10,8 +10,8 @@ const taskSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: String,
+    priority: {
+      type: Object,
       required: true,
     },
     user: {

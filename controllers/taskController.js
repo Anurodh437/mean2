@@ -7,13 +7,12 @@ const getTasks = asyncHandler(async (req, res) => {
 });
 
 const createTask = asyncHandler(async (req, res) => {
-  const { title, content, category } = req.body;
-
-  if (!title || !content || !category) {
+  const { title, content, priority } = req.body;
+  if (!title || !content || !priority) {
     res.status(400);
     throw new Error("Please fill all the Fields");
   } else {
-    const task = new Task({ user: req.user._id, title, content, category });
+    const task = new Task({ user: req.user._id, title, content, priority });
     const createdTask = await task.save();
     res.status(201).json(createdTask);
   }
@@ -30,7 +29,7 @@ const getTaskById = asyncHandler(async (req, res) => {
 });
 
 const updateTask = asyncHandler(async (req, res) => {
-  const { title, content, category } = req.body;
+  const { title, content, priority } = req.body;
 
   const task = await Task.findById(req.params.id);
   if (task.user.toString() !== req.user._id.toString()) {
@@ -40,7 +39,7 @@ const updateTask = asyncHandler(async (req, res) => {
   if (task) {
     task.title = title;
     task.content = content;
-    task.category = category;
+    task.priority = priority;
 
     const updateTask = await task.save();
     res.json(updateTask);
