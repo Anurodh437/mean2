@@ -16,6 +16,6 @@ router.route("/register").post(signupUser);
 router.route("/login").post(loginUser);
 
 // User Profile Route
-// router.route("/userProfile").post(protect, profile);
+router.route("/userProfile").post(protect, profile);
 
 module.exports = router;

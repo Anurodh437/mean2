@@ -10,7 +10,7 @@ const signupUser = asyncHandler(async (req, res) => {
   console.log("Signup user called ");
 
   // extract the required parameters from request
-  const { name, email, password, mobile } = req.body;
+  const { name, email, password, mobile, pic } = req.body;
 
   if (!name || !email || !password || !mobile) {
     res.status(400);
@@ -33,6 +33,7 @@ const signupUser = asyncHandler(async (req, res) => {
     email,
     password,
     mobile,
+    pic,
   });
 
   // if user creation is successfull, send resposne
@@ -44,6 +45,7 @@ const signupUser = asyncHandler(async (req, res) => {
         name: user.name,
         email: user.email,
         mobile: user.mobile,
+        pic: user.pic,
         token: generateToken(user._id),
       },
     });
@@ -75,6 +77,7 @@ const loginUser = asyncHandler(async (req, res) => {
         name: user.name,
         email: user.email,
         mobile: user.mobile,
+        pic: user.pic,
         token: generateToken(user._id),
       },
     });
@@ -84,9 +87,32 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-const profile = asyncHandler(async (req, res) => {
-  console.log("profile route called");
-  res.send("Profile check api is working");
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.pic = req.body.pic || user.pic;
+
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      mobile: updatedUser.mobile,
+      pic: updatedUser.pic,
+      token: generateToken(updatedUser._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found!");
+  }
 });
 
-module.exports = { signupUser, loginUser, profile };
+module.exports = { signupUser, loginUser, updateUserProfile };
