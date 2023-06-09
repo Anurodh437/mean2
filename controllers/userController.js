@@ -88,11 +88,12 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.find(req.user._id);
 
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.mobile = req.body.mobile || user.mobile;
     user.pic = req.body.pic || user.pic;
 
     if (req.body.password) {
