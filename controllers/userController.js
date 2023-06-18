@@ -89,12 +89,17 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
+  console.log(req.body);
 
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.mobile = req.body.mobile || user.mobile;
-    user.pic = req.body.pic || user.pic;
+    if (req.body.photo.includes("fakepath") && !req.body.image) {
+      user.pic = user.pic;
+    } else {
+      user.pic = req.body.image;
+    }
 
     if (req.body.password) {
       user.password = req.body.password;
